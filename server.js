@@ -11,6 +11,24 @@ connectDb();
 //middleware
 app.use(express.json());
 
+//CORS(cross origin resource share) 3rd party middleware
+const whiteList = [
+  "https://www.google.com",
+  "http://localhost:3000",
+  "http://localhost:3500",
+];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whiteList.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by the CORS"));
+    }
+  },
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+
 //routes
 app.use("/", require("./routes/userWalletRoutes"));
 
