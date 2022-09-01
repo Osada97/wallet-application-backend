@@ -2,6 +2,7 @@ const express = require("express");
 const connectDb = require("./config/db");
 const app = express();
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const PORT = process.env.PORT || 3500;
 
@@ -12,11 +13,7 @@ connectDb();
 app.use(express.json());
 
 //CORS(cross origin resource share) 3rd party middleware
-const whiteList = [
-  "https://www.google.com",
-  "http://localhost:3000",
-  "http://localhost:3500",
-];
+const whiteList = ["http://localhost:3000", "http://localhost:3500"];
 const corsOptions = {
   origin: (origin, callback) => {
     if (whiteList.indexOf(origin) !== -1 || !origin) {
